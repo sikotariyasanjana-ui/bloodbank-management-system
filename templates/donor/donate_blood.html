@@ -1,0 +1,65 @@
+{% extends 'donor/base.html' %}
+{% block content %}
+<style>
+    .form-box {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+        width: 100%;
+        max-width: 400px;
+        margin: 20px auto;
+    }
+    h2 {
+        text-align: center;
+        color: darkred;
+    }
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background: darkred;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: red;
+    }
+</style>
+
+<div class="form-box">
+    <h2>🩸 Donate Blood</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="donor_name" value="{{ donor.get_name }}" placeholder="Donor Name" required>
+        <input type="number" name="age" placeholder="Age" required>
+
+        <select name="bloodgroup" required>
+            <option value="">Select Blood Group</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+        </select>
+
+        <input type="text" name="disease" placeholder="Any Disease (if any)" required>
+        <input type="number" name="unit" placeholder="Units to Donate" required>
+
+        <button type="submit">Submit Donation</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Request History</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: darkred;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: darkred;
+            color: white;
+        }
+
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📜 Blood Request History</h1>
+
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Blood Group</th>
+            <th>Units Needed</th>
+            <th>Age</th>
+            <th>Reason</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+
+        {% for req in requests %}
+        <tr>
+            <td>{{ req.patient_name }}</td>
+            <td>{{ req.bloodgroup }}</td>
+            <td>{{ req.unit }}</td>
+            <td>{{ req.patient_age }}</td>
+            <td>{{ req.reason }}</td>
+            <td>
+                {% if req.request_by_patient %}
+                    {{ req.request_by_patient.mobile }}
+                {% elif req.request_by_donor %}
+                    {{ req.request_by_donor.mobile }}
+                {% else %}
+                    -
+                {% endif %}
+            <td>
+                {% if req.status == "Approved" %}
+                    <span class="approved">Approved</span>
+                {% elif req.status == "Pending" %}
+                    <span class="pending" style="color: orange; font-weight: bold;">Pending</span>
+                {% else %}
+                    <span class="rejected">Rejected</span>
+                {% endif %}
+            </td>
+            <td>{{ req.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No request history available</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

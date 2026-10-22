@@ -1,0 +1,93 @@
+{% extends 'donor/base.html' %}
+{% block content %}
+<style>
+    .form-box {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+        width: 100%;
+        max-width: 400px;
+        margin: 20px auto;
+    }
+    h2 {
+        text-align: center;
+        color: darkred;
+        margin-bottom: 20px;
+    }
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: inherit;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background: darkred;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+    button:hover {
+        background: red;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .back-link a {
+        text-decoration: none;
+        color: #666;
+        font-size: 0.9em;
+    }
+    .back-link a:hover {
+        color: darkred;
+    }
+</style>
+
+<div class="form-box">
+    <h2>🩸 Edit Donation</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label style="font-size: 0.9em; font-weight: 600; color: #444;">Donor Name</label>
+        <input type="text" name="donor_name" value="{{ donation.donor_name|default:donor.get_name }}" placeholder="Donor Name" required>
+
+        <label style="font-size: 0.9em; font-weight: 600; color: #444;">Age</label>
+        <input type="number" name="age" value="{{ donation.age }}" placeholder="Age" required>
+
+        <label style="font-size: 0.9em; font-weight: 600; color: #444;">Blood Group</label>
+        <select name="bloodgroup" required>
+            <option value="">Select Blood Group</option>
+            <option {% if donation.bloodgroup == 'A+' %}selected{% endif %}>A+</option>
+            <option {% if donation.bloodgroup == 'A-' %}selected{% endif %}>A-</option>
+            <option {% if donation.bloodgroup == 'B+' %}selected{% endif %}>B+</option>
+            <option {% if donation.bloodgroup == 'B-' %}selected{% endif %}>B-</option>
+            <option {% if donation.bloodgroup == 'O+' %}selected{% endif %}>O+</option>
+            <option {% if donation.bloodgroup == 'O-' %}selected{% endif %}>O-</option>
+            <option {% if donation.bloodgroup == 'AB+' %}selected{% endif %}>AB+</option>
+            <option {% if donation.bloodgroup == 'AB-' %}selected{% endif %}>AB-</option>
+        </select>
+
+        <label style="font-size: 0.9em; font-weight: 600; color: #444;">Any Disease (if any)</label>
+        <input type="text" name="disease" value="{{ donation.disease }}" placeholder="Any Disease (if any)" required>
+
+        <label style="font-size: 0.9em; font-weight: 600; color: #444;">Units to Donate</label>
+        <input type="number" name="unit" value="{{ donation.unit }}" placeholder="Units to Donate" required>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <div class="back-link">
+        <a href="{% url 'donation-history' %}">← Cancel and Go Back</a>
+    </div>
+</div>
+{% endblock content %}

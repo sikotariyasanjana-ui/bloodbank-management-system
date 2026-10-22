@@ -1,0 +1,97 @@
+{% extends 'blood/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<style>
+    .stock-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .stock-table th, .stock-table td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+    .stock-table th {
+        background-color: darkred;
+        color: white;
+        text-transform: uppercase;
+        font-size: 0.9em;
+    }
+    .blood-group {
+        font-weight: bold;
+        color: darkred;
+        font-size: 1.2em;
+    }
+    .update-form {
+        margin-top: 40px;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        max-width: 500px;
+    }
+    .update-form h2 {
+        margin-top: 0;
+        color: darkred;
+        margin-bottom: 20px;
+    }
+    .btn-update {
+        background: darkred;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1em;
+    }
+    .btn-update:hover {
+        background: red;
+    }
+</style>
+
+<div class="header" style="margin-bottom: 30px;">
+    <h2 style="color: darkred;">🩸 Manage Blood Stock</h2>
+</div>
+
+<table class="stock-table">
+    <thead>
+        <tr>
+            <th>Blood Group</th>
+            <th>Available Units (L)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td class="blood-group">A+</td><td>{{ A1.unit }}</td></tr>
+        <tr><td class="blood-group">A-</td><td>{{ A2.unit }}</td></tr>
+        <tr><td class="blood-group">B+</td><td>{{ B1.unit }}</td></tr>
+        <tr><td class="blood-group">B-</td><td>{{ B2.unit }}</td></tr>
+        <tr><td class="blood-group">AB+</td><td>{{ AB1.unit }}</td></tr>
+        <tr><td class="blood-group">AB-</td><td>{{ AB2.unit }}</td></tr>
+        <tr><td class="blood-group">O+</td><td>{{ O1.unit }}</td></tr>
+        <tr><td class="blood-group">O-</td><td>{{ O2.unit }}</td></tr>
+    </tbody>
+</table>
+
+<div class="update-form">
+    <h2>Update Stock</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label>Blood Group</label>
+            {% render_field bloodForm.bloodgroup class="form-control" style="width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc;" %}
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label>Units</label>
+            {% render_field bloodForm.unit class="form-control" style="width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc;" %}
+        </div>
+        <button type="submit" class="btn-update">Update Stock</button>
+    </form>
+</div>
+
+{% endblock content %}

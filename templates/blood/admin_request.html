@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Blood Requests</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: darkred;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: darkred;
+            color: white;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            color: white;
+            background-color: green;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn.reject {
+            background-color: red;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🩸 Blood Request Management</h1>
+
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Blood Group</th>
+            <th>Units Needed</th>
+            <th>Age</th>
+            <th>Reason</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for request in requests %}
+        <tr>
+            <td>{{ request.patient_name }}</td>
+            <td>{{ request.bloodgroup }}</td>
+            <td>{{ request.unit }}</td>
+            <td>{{ request.patient_age }}</td>
+            <td>{{ request.reason }}</td>
+            <td>
+                {% if request.request_by_patient %}
+                    {{ request.request_by_patient.mobile }}
+                {% elif request.request_by_donor %}
+                    {{ request.request_by_donor.mobile }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{ request.status }}</td>
+            <td>
+                <a href="{% url 'update-approve-status' request.id %}" class="btn">Approve</a>
+                <a href="{% url 'update-reject-status' request.id %}" class="btn reject">Reject</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No requests found</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

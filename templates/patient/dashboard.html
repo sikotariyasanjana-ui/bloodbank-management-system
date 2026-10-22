@@ -1,0 +1,90 @@
+{% extends 'patient/base.html' %}
+{% block content %}
+<style>
+    .card {
+        display: inline-block;
+        width: 200px;
+        margin: 15px;
+        padding: 20px;
+        background: white;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+    .card h3 {
+        margin: 10px 0;
+        color: #2c3e50;
+    }
+    .card p {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #e74c3c;
+    }
+    .card-nav {
+        border-top: 4px solid #8b0000;
+    }
+    .card-stat {
+        border-top: 4px solid #2c3e50;
+    }
+    .card a {
+        text-decoration: none;
+        color: darkred;
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+</style>
+
+<div class="header text-center" style="background: linear-gradient(135deg, #8b0000, #b22222); color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1>🩸 Welcome to Your Patient Dashboard</h1>
+    <p>Track your blood requests and stay informed.</p>
+</div>
+
+<!-- Status Statistics Section -->
+<div class="container text-center" style="margin-top: 30px;">
+    <div class="card card-stat">
+        <h3>Total Requests</h3>
+        <p>{{ requestmade }}</p>
+    </div>
+    <div class="card card-stat">
+        <h3>Pending</h3>
+        <p>{{ requestpending }}</p>
+    </div>
+    <div class="card card-stat">
+        <h3>Approved</h3>
+        <p>{{ requestapproved }}</p>
+    </div>
+    <div class="card card-stat">
+        <h3>Rejected</h3>
+        <p>{{ requestrejected }}</p>
+    </div>
+</div>
+
+<hr style="width: 80%; margin: 40px auto; border: 0; border-top: 1px solid #ccc;">
+
+<!-- Navigation Links Section -->
+<div class="container text-center">
+    <div class="card card-nav">
+        <h3>Request Blood</h3>
+        <p>🩸</p>
+        <a href="{% url 'make-request' %}">Make Request</a>
+    </div>
+
+    <div class="card card-nav">
+        <h3>My Requests</h3>
+        <p>📋</p>
+        <a href="{% url 'my-request' %}">View Requests</a>
+    </div>
+
+    <div class="card card-nav">
+        <h3>Logout</h3>
+        <p>🚪</p>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+{% endblock content %}

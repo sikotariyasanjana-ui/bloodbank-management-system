@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Patient Panel</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: darkred;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: darkred;
+            color: white;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            color: white;
+            background-color: red;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🩺 Patient Management</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Blood Group Needed</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.get_name }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.bloodgroup }}</td>
+            <td>{{ patient.address }}</td>
+            <td>{{ patient.mobile }}</td>
+            <td>
+                <a href="{% url 'update-patient' patient.id %}" class="btn" style="background-color: #3498db; margin-right: 5px;">Edit</a>
+                <a href="{% url 'delete-patient' patient.id %}" class="btn" style="background-color: #e74c3c;">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No patients found</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Signup - Blood Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            color: #d32f2f;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.05em;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section h3 {
+            color: #d32f2f;
+            font-size: 1.15em;
+            margin-bottom: 15px;
+            border-left: 4px solid #d32f2f;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 600px) {
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        label {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95em;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #d32f2f;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+            outline: none;
+        }
+
+        input[type="file"] {
+            padding: 8px 0;
+            font-family: inherit;
+        }
+
+        .error-box {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+        }
+
+        .error-box ul {
+            list-style-position: inside;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.2);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.3);
+            background: linear-gradient(135deg, #e53935 0%, #c62828 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .link a {
+            text-decoration: none;
+            color: #d32f2f;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .link a:hover {
+            color: #b71c1c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="signup-container">
+        <h2>🩸 Patient Registration</h2>
+        <p class="subtitle">Create an account to request blood compatibility alerts</p>
+
+        {% if userForm.errors or patientForm.errors %}
+            <div class="error-box">
+                <p><strong>Please correct the errors below:</strong></p>
+                <ul>
+                    {% for field in userForm %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in userForm.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    
+                    {% for field in patientForm %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in patientForm.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-section">
+                <h3>🔑 Account Details</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="id_first_name">First Name</label>
+                        {{ userForm.first_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_last_name">Last Name</label>
+                        {{ userForm.last_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        {{ userForm.username }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        {{ userForm.password }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>🩺 Medical & Contact Details</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="id_age">Age</label>
+                        {{ patientForm.age }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_bloodgroup">Blood Group</label>
+                        {{ patientForm.bloodgroup }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_disease">Disease / Medical Reason</label>
+                        {{ patientForm.disease }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_doctorname">Doctor's Name</label>
+                        {{ patientForm.doctorname }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_mobile">Mobile Number</label>
+                        {{ patientForm.mobile }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_address">Address</label>
+                        {{ patientForm.address }}
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="id_profile_pic">Profile Picture (Optional)</label>
+                        {{ patientForm.profile_pic }}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Register as Patient</button>
+        </form>
+
+        <div class="link">
+            <p>Already have an account? <a href="{% url 'patient-login' %}">Login here</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

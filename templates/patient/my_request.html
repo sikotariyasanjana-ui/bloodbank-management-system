@@ -1,0 +1,59 @@
+{% extends 'patient/base.html' %}
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+    th {
+        background-color: darkred;
+        color: white;
+    }
+    .pending { color: orange; font-weight: bold; }
+    .approved { color: green; font-weight: bold; }
+    .rejected { color: red; font-weight: bold; }
+</style>
+
+<div class="container">
+    <h1 class="text-center" style="color:darkred;">📜 My Blood Requests</h1>
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+        {% for req in blood_requests %}
+        <tr>
+            <td>{{ req.patient_name }}</td>
+            <td>{{ req.bloodgroup }}</td>
+            <td>{{ req.unit }}</td>
+            <td>{{ req.reason }}</td>
+            <td>
+                {% if req.status == "Pending" %}
+                    <span class="pending">Pending</span>
+                {% elif req.status == "Approved" %}
+                    <span class="approved">Approved</span>
+                {% else %}
+                    <span class="rejected">Rejected</span>
+                {% endif %}
+            </td>
+            <td>{{ req.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No requests found</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Bank Home</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; color: #333; }
+        
+        .header { background: linear-gradient(135deg, #8b0000, #b22222); color: white; padding: 40px 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header h1 { margin: 0; font-size: 2.5em; letter-spacing: 1px; }
+        .header p { margin: 10px 0 0; font-style: italic; opacity: 0.9; }
+
+        .nav { background-color: #2c3e50; overflow: hidden; display: flex; justify-content: center; }
+        .nav a { display: block; color: #ecf0f1; padding: 15px 25px; text-decoration: none; font-weight: 500; transition: background 0.3s; }
+        .nav a:hover { background-color: #e74c3c; }
+
+        .hero { padding: 60px 20px; text-align: center; }
+        .hero h2 { font-size: 2.2em; color: #8b0000; margin-bottom: 20px; }
+        .hero p { font-size: 1.1em; max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+
+        .roles-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; padding: 0 20px 60px; }
+        
+        .role-card { background: white; border-radius: 12px; padding: 30px; width: 300px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; text-align: center; border-top: 5px solid #8b0000; }
+        .role-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.12); }
+        .role-card h3 { font-size: 1.5em; margin-bottom: 15px; color: #2c3e50; }
+        .role-card p { font-size: 0.95em; color: #666; margin-bottom: 25px; }
+
+        .btn { display: block; padding: 12px; margin: 10px 0; border-radius: 6px; text-decoration: none; font-weight: bold; transition: all 0.3s; border: 1px solid #8b0000; }
+        .btn-primary { background-color: #8b0000; color: white; }
+        .btn-primary:hover { background-color: #b22222; }
+        .btn-secondary { background-color: white; color: #8b0000; }
+        .btn-secondary:hover { background-color: #fff0f0; }
+
+        footer { text-align: center; padding: 30px; background: #2c3e50; color: #bdc3c7; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🩸 Blood Bank Management System 🩸</h1>
+        <p>Your contribution can save a life today.</p>
+    </div>
+
+    <div class="nav">
+        <a href="{% url '' %}">Home</a>
+        <a href="{% url 'admin-login' %}">Admin Login</a>
+        <a href="{% url 'donor-login' %}">Donor Login</a>
+        <a href="{% url 'patient-login' %}">Patient Login</a>
+    </div>
+
+    <div class="hero">
+        <h2>Welcome to Our Community</h2>
+        <p>Connecting generous donors with patients in need. Whether you're looking to donate or seeking assistance, we're here to help.</p>
+        
+        <div class="roles-container">
+            <!-- Donor Role -->
+            <div class="role-card">
+                <h3>Donor</h3>
+                <p>Be a hero! Your blood donation can save up to three lives. Start your journey here.</p>
+                <a href="{% url 'donor-login' %}" class="btn btn-primary">Login</a>
+                <a href="{% url 'donor-signup' %}" class="btn btn-secondary">Sign Up</a>
+            </div>
+
+            <!-- Patient Role -->
+            <div class="role-card">
+                <h3>Patient</h3>
+                <p>In need of blood? Post a request and our community of donors will be notified immediately.</p>
+                <a href="{% url 'patient-login' %}" class="btn btn-primary">Login</a>
+                <a href="{% url 'patient-signup' %}" class="btn btn-secondary">Sign Up</a>
+            </div>
+
+            <!-- Admin Role -->
+            <div class="role-card">
+                <h3>Management</h3>
+                <p>Administrative portal for managing blood stock, donors, and urgent requests.</p>
+                <a href="{% url 'admin-login' %}" class="btn btn-primary">Admin Login</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Blood Bank Management System. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

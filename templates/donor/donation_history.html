@@ -1,0 +1,61 @@
+{% extends 'donor/base.html' %}
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+    th {
+        background-color: darkred;
+        color: white;
+    }
+    .pending { color: orange; font-weight: bold; }
+    .approved { color: green; font-weight: bold; }
+    .rejected { color: red; font-weight: bold; }
+</style>
+
+<div class="container">
+    <h1 class="text-center" style="color:darkred;">🩸 My Donation History</h1>
+    <table>
+        <tr>
+            <th>Donor Name</th>
+            <th>Age</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Disease</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+        {% for donation in donations %}
+        <tr>
+            <td>{{ donation.donor_name|default:donation.donor.get_name }}</td>
+            <td>{{ donation.age }}</td>
+            <td>{{ donation.bloodgroup }}</td>
+            <td>{{ donation.unit }}</td>
+            <td>{{ donation.disease }}</td>
+            <td>
+                {% if donation.status == "Pending" %}
+                    <span class="pending">Pending</span>
+                {% elif donation.status == "Approved" %}
+                    <span class="approved">Approved</span>
+                {% else %}
+                    <span class="rejected">Rejected</span>
+                {% endif %}
+            </td>
+            <td>{{ donation.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No donations found</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

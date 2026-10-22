@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background-color: #f4f6f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background-color: darkred;
+            position: fixed;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: red;
+        }
+
+        /* Main content */
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 5px #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>🩸 Admin</h2>
+
+        <a href="{% url 'admin-dashboard' %}">📊 Dashboard</a>
+        <a href="{% url 'admin-blood' %}">🩸 Blood Stock</a>
+        <a href="{% url 'admin-donor' %}">🙋‍♂️ Donors</a>
+        <a href="{% url 'admin-patient' %}">🏥 Patients</a>
+        <a href="{% url 'admin-request' %}">📜 Blood Requests</a>
+        <a href="{% url 'admin-request-history' %}">⏳ Request History</a>
+        <a href="{% url 'admin-donation' %}">💰 Donations</a>
+        <a href="{% url 'admin:index' %}">⚙️ Django Admin</a>
+        <a href="{% url 'logout' %}" style="margin-top:20px; border-top: 1px solid rgba(255,255,255,0.2);">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+
+        <div class="header">
+            <h2>Blood Bank Management System</h2>
+        </div>
+
+        <!-- Page Content -->
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!-- Navbar -->
+<div style="background-color:#2c3e50; overflow:hidden; display:flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+
+    <div style="display:flex; align-items: center;">
+        <a href="{% url '' %}" style="color:white; padding:14px 20px; text-decoration:none; font-weight: bold; font-size: 1.2em;">
+            🩸 Blood Bank
+        </a>
+        <a href="{% url '' %}" style="color:white; padding:14px 20px; text-decoration:none;">Home</a>
+        <a href="{% url 'admin-donor' %}" style="color:white; padding:14px 20px; text-decoration:none;">Donors</a>
+        <a href="{% url 'admin-request' %}" style="color:white; padding:14px 20px; text-decoration:none;">Requests</a>
+    </div>
+
+    <div style="display:flex; align-items: center;">
+        <a href="{% url 'donor-login' %}" style="color:white; padding:14px 20px; text-decoration:none;">Donor Login</a>
+        <a href="{% url 'patient-login' %}" style="color:white; padding:14px 20px; text-decoration:none;">Patient Login</a>
+        <a href="{% url 'admin-login' %}" style="color:white; padding:14px 20px; text-decoration:none;">Admin Login</a>
+        
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" style="color:#e74c3c; padding:14px 20px; text-decoration:none; font-weight: bold;">Logout</a>
+        {% endif %}
+    </div>
+
+</div>
